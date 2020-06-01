@@ -153,9 +153,10 @@ db = os.path.join(os.path.dirname(__file__), 'ecdict.db')
 EC_dict = StarDict(db, False)
 print('EC_dict loaded.')
 
-lemma = LemmaDB()
-lemma.load('lemma.en.txt')
-print('LemmaDB loaded.')
+# lemma = LemmaDB()
+# lemma.load('lemma.en.txt')
+# print('LemmaDB loaded.')
+lemma = None
 
 # 簡體到繁體（臺灣正體標準）並轉換爲臺灣常用詞彙 (see: https://github.com/BYVoid/OpenCC)
 converter = opencc.OpenCC('s2twp.json')
