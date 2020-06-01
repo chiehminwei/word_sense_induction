@@ -122,11 +122,7 @@ def WSI(sentences, target_word, FB_en, FB_zh, EC_dict, converter, lemma):
 
 
     # Step 1: Get FB map of target word (Spark SQL)
-    target_word_FB = {}
-    target_word_FB['catch'] = 10
-    target_word_FB['weather'] = 10  
-    target_word_FB['computer'] = 10  
-    target_word_FB['cat'] = 10  
+    target_word_FB = target_word_FB = FB_en.select("Friends").where(FB_en.Word == target_word).rdd.collect()[0][0]
 
     labels = {}
     for sentence in sentences:
