@@ -147,7 +147,7 @@ def WSI(sentences, target_word, FB_en, FB_zh, EC_dict, converter, lemma):
         labels[sentence] = definition
 
     return labels
-    
+
 
 db = os.path.join(os.path.dirname(__file__), 'ecdict.db')
 EC_dict = StarDict(db, False)
@@ -156,17 +156,17 @@ print('EC_dict loaded.')
 lemma = LemmaDB()
 lemma.load('lemma.en.txt')
 print('LemmaDB loaded.')
-# lemma.word_stem(word)
 
 # 簡體到繁體（臺灣正體標準）並轉換爲臺灣常用詞彙 (see: https://github.com/BYVoid/OpenCC)
 converter = opencc.OpenCC('s2twp.json')
 
-# path = '/Users/Jimmy/Downloads/all/merged_old.pkl'
-path = '/Users/Jimmy/Downloads/all/merged_new.pkl'
+path = '/FileStore/merged_new.pkl'
 FB_zh = pickle.load(open(path, 'rb'))
 print("FB_zh loaded.")
 
-FB_en = None
+from pyspark.sql import SQLContext
+sqlContext = SQLContext(sc)
+FB_en = sqlContext.read.parquet('/FileStore/FB_fixed.parquet')
 print("FB_en loaded.")
 
 # Sometimes it works...
@@ -176,7 +176,7 @@ labels = WSI(sentences, target_word, FB_en, FB_zh, EC_dict, converter, lemma)
 print(labels)
 
 # But sometimes it doesn't
-# target_word = "mouse"
-# sentences = ["The computer mouse is hard to use", "Mouse and cat"]
-# labels = WSI(sentences, target_word, FB_en, FB_zh, EC_dict)
-# print(labels)
+target_word = "mouse"
+sentences = ["The computer mouse is hard to use", "Mouse and cat"]
+labels = WSI(sentences, target_word, FB_en, FB_zh, EC_dict)
+print(labels)
