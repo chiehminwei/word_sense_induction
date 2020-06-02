@@ -161,7 +161,7 @@ lemma = None
 # 簡體到繁體（臺灣正體標準）並轉換爲臺灣常用詞彙 (see: https://github.com/BYVoid/OpenCC)
 converter = opencc.OpenCC('s2twp.json')
 
-path = '/FileStore/merged_new.pkl'
+path = '../merged_new.pkl'
 FB_zh = pickle.load(open(path, 'rb'))
 print("FB_zh loaded.")
 
@@ -176,7 +176,7 @@ sentences = ["I caught a cold", "The weather is cold"]
 labels = WSI(sentences, target_word, FB_en, FB_zh, EC_dict, converter, lemma)
 print(labels)
 
-# But sometimes it doesn't
+# But sometimes it doesn't :(
 target_word = "mouse"
 sentences = ["The computer mouse is hard to use", "Mouse and cat"]
 labels = WSI(sentences, target_word, FB_en, FB_zh, EC_dict)
